@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@angular/core": "^19.2.8",
+    "@angular/forms": "^19.2.8",
+    "@angular/router": "^19.2.8",
+    "@supabase/supabase-js": "^2.49.4"
+  }
+}
