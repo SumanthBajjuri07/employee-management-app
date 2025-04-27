@@ -29,6 +29,11 @@ jobs:
         run: |
           cd employee-management
           ng build --configuration production --base-href=/employee-management-app/
+          ls -la dist/employee-management
+
+      - name: Create .nojekyll file
+        run: |
+          touch employee-management/dist/employee-management/.nojekyll
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
