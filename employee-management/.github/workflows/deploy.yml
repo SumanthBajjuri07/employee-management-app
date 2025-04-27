@@ -22,7 +22,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build -- --configuration production --base-href="/Employee-Management/"
+        run: npm run build -- --configuration production --base-href="/employee-management-app/"
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4

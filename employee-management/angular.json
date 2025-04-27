@@ -46,7 +46,7 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/Employee-Management/"
+              "baseHref": "/employee-management-app/"
             },
             "development": {
               "buildOptimizer": false,
