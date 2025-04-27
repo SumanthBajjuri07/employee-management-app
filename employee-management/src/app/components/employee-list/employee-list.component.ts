@@ -63,12 +63,14 @@ export class EmployeeListComponent implements OnInit {
   }
 
   addEmployee(): void {
-    this.router.navigate(['/employees/new']);
+    window.location.href = '/employees/new';
+    // this.router.navigate(['/employees/new']);
   }
 
   editEmployee(id: string): void {
     if (id) {
-      this.router.navigate(['/employees/edit', id]);
+      window.location.href = `/employees/edit/${id}`;
+      // this.router.navigate(['/employees/edit', id]);
     }
   }
 

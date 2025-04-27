@@ -176,7 +176,8 @@ export class EmployeeFormComponent implements OnInit {
         } else {
           await this.employeeService.createEmployee(formValue);
         }
-        this.router.navigate(['/employees']);
+        window.location.href = '/employees';
+        // this.router.navigate(['/employees']);
       } catch (error) {
         console.error('Error saving employee:', error);
         this.errorMessage = 'Error saving employee. Please try again.';
@@ -187,6 +188,7 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/employees']);
+    window.location.href = '/employees';
+    // this.router.navigate(['/employees']);
   }
 } 
