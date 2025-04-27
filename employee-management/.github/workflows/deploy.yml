@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # or master, depending on your default branch
+      - main
 
 jobs:
   build-and-deploy:
@@ -17,15 +17,20 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
+          cache-dependency-path: employee-management/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          cd employee-management
+          npm ci
 
       - name: Build
-        run: npm run build -- --configuration production --base-href="/employee-management-app/"
+        run: |
+          cd employee-management
+          npm run build -- --base-href=/employee-management-app/
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist/employee-management
+          folder: employee-management/dist/employee-management/browser
           branch: gh-pages 
