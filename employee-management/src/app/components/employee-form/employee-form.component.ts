@@ -176,8 +176,8 @@ export class EmployeeFormComponent implements OnInit {
         } else {
           await this.employeeService.createEmployee(formValue);
         }
-        window.location.href = 'https://sumanthbajjuri07.github.io/employee-management-app/employees';
-        // this.router.navigate(['/employees']);
+        // window.location.href = 'https://sumanthbajjuri07.github.io/employee-management-app/employees';
+        this.router.navigate(['/employees']);
       } catch (error) {
         console.error('Error saving employee:', error);
         this.errorMessage = 'Error saving employee. Please try again.';
@@ -188,7 +188,7 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   goBack(): void {
-    window.location.href = 'https://sumanthbajjuri07.github.io/employee-management-app/employees';
-    // this.router.navigate(['/employees']);
+    // window.location.href = 'https://sumanthbajjuri07.github.io/employee-management-app/employees';
+    this.router.navigate(['/employees']);
   }
 } 

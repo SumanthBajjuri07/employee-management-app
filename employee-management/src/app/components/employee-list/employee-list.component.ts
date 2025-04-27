@@ -63,14 +63,14 @@ export class EmployeeListComponent implements OnInit {
   }
 
   addEmployee(): void {
-    window.location.href = 'https://sumanthbajjuri07.github.io/employee-management-app/employees/new';
-    // this.router.navigate(['/employees/new']);
+    // window.location.href = 'https://sumanthbajjuri07.github.io/employee-management-app/employees/new';
+    this.router.navigate(['/employees/new']);
   }
 
   editEmployee(id: string): void {
     if (id) {
-      window.location.href = `https://sumanthbajjuri07.github.io/employee-management-app/employees/edit/${id}`;
-      // this.router.navigate(['/employees/edit', id]);
+      // window.location.href = `https://sumanthbajjuri07.github.io/employee-management-app/employees/edit/${id}`;
+      this.router.navigate(['/employees/edit', id]);
     }
   }
 
