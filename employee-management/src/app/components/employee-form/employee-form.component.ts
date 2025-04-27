@@ -176,7 +176,7 @@ export class EmployeeFormComponent implements OnInit {
         } else {
           await this.employeeService.createEmployee(formValue);
         }
-        window.location.href = '/employees';
+        window.location.href = 'https://sumanthbajjuri07.github.io/employee-management-app/employees';
         // this.router.navigate(['/employees']);
       } catch (error) {
         console.error('Error saving employee:', error);
@@ -188,7 +188,7 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   goBack(): void {
-    window.location.href = '/employees';
+    window.location.href = 'https://sumanthbajjuri07.github.io/employee-management-app/employees';
     // this.router.navigate(['/employees']);
   }
 } 
