@@ -23,14 +23,16 @@ jobs:
         run: |
           cd employee-management
           npm ci
+          npm install -g @angular/cli
 
       - name: Build
         run: |
           cd employee-management
-          npm run build -- --base-href=/employee-management-app/
+          ng build --configuration production --base-href=/employee-management-app/
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: employee-management/dist/employee-management/browser
-          branch: gh-pages 
+          branch: gh-pages
+          clean: true 
