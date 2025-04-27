@@ -35,4 +35,5 @@ jobs:
         with:
           folder: employee-management/dist/employee-management/browser
           branch: gh-pages
-          clean: true 
+          clean: true
+          commit-message: "Deploy Angular app to GitHub Pages" 
