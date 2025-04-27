@@ -43,4 +43,5 @@ jobs:
           folder: employee-management/dist/employee-management
           branch: gh-pages
           clean: true
-          commit-message: "Deploy Angular app to GitHub Pages" 
+          commit-message: "Deploy Angular app to GitHub Pages"
+          token: ${{ secrets.GITHUB_TOKEN }} 
