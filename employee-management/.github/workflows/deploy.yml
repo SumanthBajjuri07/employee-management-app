@@ -33,7 +33,7 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: employee-management/dist/employee-management/browser
+          folder: employee-management/dist/employee-management
           branch: gh-pages
           clean: true
           commit-message: "Deploy Angular app to GitHub Pages" 
