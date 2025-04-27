@@ -45,8 +45,7 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all",
-              "baseHref": "/employee-management-app/"
+              "outputHashing": "all"
             },
             "development": {
               "buildOptimizer": false,

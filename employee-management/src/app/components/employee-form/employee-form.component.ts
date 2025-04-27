@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../../services/employee.service';
-import { AvatarService } from '../../services/avatar.service';
-import { Employee } from '../../models/employee.model';
 
 @Component({
   selector: 'app-employee-form',
   template: `
     <div class="container mx-auto p-4">
       <h1 class="text-2xl font-bold mb-6">{{ isEditMode ? 'Edit Employee' : 'Add New Employee' }}</h1>
+
+      <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <span class="block sm:inline">{{ errorMessage }}</span>
+      </div>
 
       <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="max-w-lg">
         <div class="mb-4">
@@ -95,11 +97,11 @@ import { Employee } from '../../models/employee.model';
         <div class="flex items-center justify-between">
           <button
             type="submit"
-            [disabled]="employeeForm.invalid"
+            [disabled]="employeeForm.invalid || isSubmitting"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            [class.opacity-50]="employeeForm.invalid"
+            [class.opacity-50]="employeeForm.invalid || isSubmitting"
           >
-            {{ isEditMode ? 'Update' : 'Add' }} Employee
+            {{ isSubmitting ? 'Saving...' : (isEditMode ? 'Update' : 'Add') }} Employee
           </button>
           <button
             type="button"
@@ -118,11 +120,12 @@ export class EmployeeFormComponent implements OnInit {
   employeeForm: FormGroup;
   isEditMode = false;
   employeeId: string | null = null;
+  isSubmitting = false;
+  errorMessage = '';
 
   constructor(
     private fb: FormBuilder,
     private employeeService: EmployeeService,
-    private avatarService: AvatarService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -132,45 +135,53 @@ export class EmployeeFormComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       contact_no: ['', Validators.required],
       designation: ['', Validators.required],
-      avatar: ['']
+      avatar: ['https://ui-avatars.com/api/?name='] // Default avatar URL
     });
   }
 
   ngOnInit(): void {
-    this.employeeId = this.route.snapshot.paramMap.get('id');
-    this.isEditMode = !!this.employeeId;
-
-    if (this.isEditMode && this.employeeId) {
-      this.loadEmployee();
-    } else {
-      this.employeeForm.patchValue({
-        avatar: this.avatarService.generateRandomAvatar()
-      });
-    }
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.isEditMode = true;
+        this.employeeId = params['id'];
+        this.loadEmployee();
+      }
+    });
   }
 
   private async loadEmployee(): Promise<void> {
-    try {
-      if (this.employeeId) {
+    if (this.employeeId) {
+      try {
         const employee = await this.employeeService.getEmployee(this.employeeId);
         this.employeeForm.patchValue(employee);
+      } catch (error) {
+        console.error('Error loading employee:', error);
+        this.errorMessage = 'Error loading employee details';
       }
-    } catch (error) {
-      console.error('Error loading employee:', error);
     }
   }
 
   async onSubmit(): Promise<void> {
     if (this.employeeForm.valid) {
+      this.isSubmitting = true;
+      this.errorMessage = '';
+
       try {
+        const formValue = this.employeeForm.value;
+        // Update avatar URL with the employee's name
+        formValue.avatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(formValue.name)}`;
+
         if (this.isEditMode && this.employeeId) {
-          await this.employeeService.updateEmployee(this.employeeId, this.employeeForm.value);
+          await this.employeeService.updateEmployee(this.employeeId, formValue);
         } else {
-          await this.employeeService.createEmployee(this.employeeForm.value);
+          await this.employeeService.createEmployee(formValue);
         }
         this.router.navigate(['/employees']);
       } catch (error) {
         console.error('Error saving employee:', error);
+        this.errorMessage = 'Error saving employee. Please try again.';
+      } finally {
+        this.isSubmitting = false;
       }
     }
   }
